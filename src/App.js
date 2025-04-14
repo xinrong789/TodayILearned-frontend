@@ -1,39 +1,41 @@
-import "./style.css"
-import { useEffect, useState } from "react"
-import axios from "axios"
-import CategoryFilters from "./CategoryFilters"
-import NewFactForm from "./NewFactForm"
-import FactList from "./Factlist"
-import Header from "./Header"
+import "./style.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CategoryFilters from "./CategoryFilters";
+import NewFactForm from "./NewFactForm";
+import FactList from "./Factlist";
+import Header from "./Header";
 function App() {
-  const [showForm, setShowForm] = useState(false)
-  const [facts, setFacts] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false) // To track errors
-  const [currentCategory, setCurrentCategory] = useState("all")
+  const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false); // To track errors
+  const [currentCategory, setCurrentCategory] = useState("all");
 
   useEffect(() => {
     async function getFacts() {
-      setIsLoading(true)
-      setIsError(false) // Reset error before making the request
+      setIsLoading(true);
+      setIsError(false);
 
       try {
-        let url = "http://localhost:3000/facts"
+        let url = "http://localhost:3000/facts";
         if (currentCategory !== "all") {
-          url += `?category=${currentCategory}`
+          url += `?category=${currentCategory}`;
         }
 
-        const response = await axios.get(url)
-        setFacts(response.data)
+        const response = await axios.get(url);
+        console.log("返回的数据:", response.data);
+        console.log("数据条数:", response.data.length);
+        setFacts(response.data);
       } catch (error) {
-        setIsError(true)
-        console.error("Error fetching data:", error)
+        setIsError(true);
+        console.error("Error fetching data:", error);
       }
 
-      setIsLoading(false)
+      setIsLoading(false);
     }
-    getFacts()
-  }, [currentCategory])
+    getFacts();
+  }, [currentCategory]);
 
   return (
     <>
@@ -56,11 +58,11 @@ function App() {
         )}
       </main>
     </>
-  )
+  );
 }
 
 function Loader() {
-  return <p className="message">Loading...</p>
+  return <p className="message">Loading...</p>;
 }
 
-export default App
+export default App;

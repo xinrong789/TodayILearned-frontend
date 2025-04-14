@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function NewFactForm({ setFacts, setShowForm }) {
   const CATEGORIES = [
@@ -10,47 +10,55 @@ function NewFactForm({ setFacts, setShowForm }) {
     { name: "entertainment", color: "#db2777" },
     { name: "health", color: "#14b8a6" },
     { name: "history", color: "#f97316" },
-    { name: "news", color: "#8b5cf6" }
-  ]
-  const [text, setText] = useState("")
-  const [source, setSource] = useState("")
-  const [category, setCategory] = useState("")
-  const [isUploading, setIsUploading] = useState(false)
-  const textLength = text.length
+    { name: "news", color: "#8b5cf6" },
+  ];
+  const [text, setText] = useState("");
+  const [source, setSource] = useState("");
+  const [category, setCategory] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const textLength = text.length;
 
   function isValidHttpUrl(string) {
-    let url
+    let url;
     try {
-      url = new URL(string)
+      url = new URL(string);
     } catch (_) {
-      return false
+      return false;
     }
-    return url.protocol === "http:" || url.protocol === "https:"
+    return url.protocol === "http:" || url.protocol === "https:";
   }
 
   async function HandleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
+    console.log(text, source, category);
 
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
-      setIsUploading(true)
-
+      setIsUploading(true);
       try {
         const response = await axios.post("http://localhost:3000/facts", {
           text,
           source,
-          category
-        })
+          category,
+        });
 
-        setFacts((facts) => [response.data, ...facts])
-        setText("")
-        setSource("")
-        setCategory("")
-        setShowForm(false)
+        // 打印新返回的 fact 数据
+        console.log("1111Response data received:", response.config.data);
+
+        // const newFact = response.config.data;
+        const newFact = JSON.parse(response.config.data);
+
+        // 确保你更新了 facts
+        setFacts((prevFacts) => [newFact, ...prevFacts]);
+
+        // 清空表单
+        setText("");
+        setSource("");
+        setCategory("");
+        setShowForm(false);
       } catch (error) {
-        console.error("Error submitting new fact:", error)
+        console.error("Error submitting new fact:", error);
       }
-
-      setIsUploading(false)
+      setIsUploading(false);
     }
   }
 
@@ -83,6 +91,6 @@ function NewFactForm({ setFacts, setShowForm }) {
         {isUploading ? "Posting..." : "Post"}
       </button>
     </form>
-  )
+  );
 }
-export default NewFactForm
+export default NewFactForm;

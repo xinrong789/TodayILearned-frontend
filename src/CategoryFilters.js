@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import React from "react";
 function CategoryFilters({ setCurrentCategory }) {
   const CATEGORIES = [
     { name: "technology", color: "#3b82f6" },
@@ -7,8 +9,8 @@ function CategoryFilters({ setCurrentCategory }) {
     { name: "entertainment", color: "#db2777" },
     { name: "health", color: "#14b8a6" },
     { name: "history", color: "#f97316" },
-    { name: "news", color: "#8b5cf6" }
-  ]
+    { name: "news", color: "#8b5cf6" },
+  ];
 
   return (
     <aside>
@@ -34,6 +36,6 @@ function CategoryFilters({ setCurrentCategory }) {
         ))}
       </ul>
     </aside>
-  )
+  );
 }
-export default CategoryFilters
+export default CategoryFilters;
