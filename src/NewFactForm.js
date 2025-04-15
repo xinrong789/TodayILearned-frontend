@@ -35,11 +35,14 @@ function NewFactForm({ setFacts, setShowForm }) {
     if (text && isValidHttpUrl(source) && category && textLength <= 200) {
       setIsUploading(true);
       try {
-        const response = await axios.post("http://localhost:3000/facts", {
-          text,
-          source,
-          category,
-        });
+        const response = await axios.post(
+          "https://todayilearned-backend.onrender.com/facts",
+          {
+            text,
+            source,
+            category,
+          }
+        );
 
         // 打印新返回的 fact 数据
         console.log("1111Response data received:", response.config.data);

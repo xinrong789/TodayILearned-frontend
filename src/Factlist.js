@@ -50,7 +50,9 @@ function FactList({ facts, setFacts }) {
       console.log("Deleting fact with ID:", id);
       try {
         // 发送 DELETE 请求到后端
-        await axios.delete(`http://localhost:3000/facts/${fact.id}`);
+        await axios.delete(
+          `https://todayilearned-backend.onrender.com/facts/${fact.id}`
+        );
 
         // 更新前端的事实列表，移除已删除的项
         setFacts((facts) => facts.filter((f) => f.id !== fact.id));

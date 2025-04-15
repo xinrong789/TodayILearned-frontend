@@ -15,10 +15,11 @@ function App() {
   useEffect(() => {
     async function getFacts() {
       setIsLoading(true);
-      setIsError(false);
+      setIsError(false); // Reset error before making the request
 
       try {
-        let url = "http://localhost:3000/facts";
+        // let url = "http://localhost:3000/facts";
+        let url = "https://todayilearned-backend.onrender.com/facts";
         if (currentCategory !== "all") {
           url += `?category=${currentCategory}`;
         }
