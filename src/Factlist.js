@@ -32,7 +32,7 @@ function FactList({ facts, setFacts }) {
       setIsUpdating(true);
       try {
         const response = await axios.patch(
-          `http://localhost:3000/facts/${fact.id}`,
+          `https://todayilearned-backend.onrender.com/facts/${fact.id}`,
           {
             [columnName]: true, // 只需发送字段名称，后端负责增加
           }
